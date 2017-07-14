@@ -1,24 +1,12 @@
-var p, d;
-
-
-function setup() {
-  createCanvas(720, 405)
-  background(225);
-
-  p = new Perceptron(2);
-}
-
-
 function Perceptron(numInputs) {
   this.numInputs = numInputs;
   this.weights = [];
   this.c = 0.1;
-  this.bias = 1;
-  //init random weights
+  this.bias = 1;  // not used
+  // init random weights
   for (var i = 0; i < this.numInputs; i++) {
     this.weights.push(random(-1, 1));
   }
-
 
   this.feedForward = function(inputs) {
     // sum weighted inputs
@@ -34,14 +22,13 @@ function Perceptron(numInputs) {
     }
   }
 
-
-  this.train = function(train_inputs, training_known) {
+  this.train = function(inputs, known) {
     // get guess and error
-    var guess = this.feedForward(train_inputs)
-    var error = training_known - guess;
-    //adjust weights
+    var guess = this.feedForward(inputs)
+    var error = known - guess;
+    // adjust weights
     for (var i = 0; i < this.numInputs; i++) {
-      this.weights[i] += error * train_inputs[i] * this.c;
+      this.weights[i] += error * inputs[i] * this.c;
     }
   }
 }
