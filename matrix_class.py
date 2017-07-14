@@ -1,5 +1,7 @@
 class Matrix(object):
     
+    # upon creation the matrix object expects a 2 dimensional list
+    # i.e. A = Matrix([[1,2,3], [3,4,5]])
     def __init__(self, m):
         self.m = m
         
@@ -18,10 +20,12 @@ class Matrix(object):
                     self.m[i][j] += n.m[i][j]
     
     
+    # return row n
     def getRow(self, n):
         return self.m[n]
     
     
+    # return collumn n
     def getColl(self, n):
         c = []
         for i in self.m:
@@ -29,6 +33,7 @@ class Matrix(object):
         return c
     
     
+    # return the dot product for two vectors
     def dotVec(self, v1, v2):
         multSum = 0
         for i in range(len(v1)):
