@@ -51,12 +51,14 @@ class Matrix(object):
         numRows = len(self.m)
         numColls = len(n.m[0])
         
+        # do the math
         for i in range(numRows):
             r = self.getRow(i)
             for j in range(numColls):
                 c = n.getColl(j)
                 l.append(self.dotVec(r, c))
         
+        # turn l into a Matrix
         ind = 0
         for i in range(numRows):
             lm.append(l[ind : ind + numColls])
