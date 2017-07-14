@@ -32,10 +32,6 @@ function Perceptron(numInputs) {
     } else {
       return 1
     }
-    this.train = function(training_inputs) {
-      //pass
-    }
-
   }
 
 
