@@ -1,4 +1,4 @@
-class Matrix(object):
+colsclass Matrix(object):
     
     # upon creation the matrix object expects a 2 dimensional list
     # i.e. A = Matrix([[1,2,3], [3,4,5]])
@@ -25,7 +25,7 @@ class Matrix(object):
         return self.m[n]
     
     
-    # return collumn n
+    # return column n
     def getColl(self, n):
         c = []
         for i in self.m:
@@ -44,24 +44,24 @@ class Matrix(object):
     
     # calculate the dot product of this matrix with matrix n
     # return the result as a new matrix
-    # the number of collumns of this matrix must be equal to the number of rows of matrix n
+    # the number of columns of this matrix must be equal to the number of rows of matrix n
     def dot(self, n):
         l = []
         lm = []
         numRows = len(self.m)
-        numColls = len(n.m[0])
+        numcols = len(n.m[0])
         
         # do the math
         for i in range(numRows):
             r = self.getRow(i)
-            for j in range(numColls):
+            for j in range(numcols):
                 c = n.getColl(j)
                 l.append(self.dotVec(r, c))
         
         # turn l into a Matrix
         ind = 0
         for i in range(numRows):
-            lm.append(l[ind : ind + numColls])
+            lm.append(l[ind : ind + numcols])
             ind += numColls
     
         return Matrix(lm)
