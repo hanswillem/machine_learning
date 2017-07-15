@@ -1,4 +1,4 @@
-colsclass Matrix(object):
+class Matrix(object):
     
     # upon creation the matrix object expects a 2 dimensional list
     # A = Matrix([[1,2,3], [3,4,5]])
