@@ -1,7 +1,7 @@
 colsclass Matrix(object):
     
     # upon creation the matrix object expects a 2 dimensional list
-    # i.e. A = Matrix([[1,2,3], [3,4,5]])
+    # A = Matrix([[1,2,3], [3,4,5]])
     def __init__(self, m):
         self.m = m
         
