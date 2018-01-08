@@ -7,12 +7,12 @@ class Matrix {
   }
 
 
-  // initialize this matrix by setting all values to 0
+  // initialize this matrix by setting all values to a random number
   init() {
     for (let i = 0; i < this.rows; i++) {
       let rw = [];
       for (let j = 0; j < this.cols; j++) {
-        rw.push(0);
+        rw.push(Math.floor(Math.random() * 10));
       }
       this.matrix.push(rw);
     }
@@ -48,7 +48,7 @@ class Matrix {
   // multiply this matrix with matrix m and return the result in a new matrix
   product(m) {
     let newMatrix = new Matrix(this.cols, this.rows);
-    for (let i = 0; i < this.rows; i++) {      
+    for (let i = 0; i < this.rows; i++) {
       let newRow = [];
       for (let j = 0; j < m.cols; j++) {
         let dotprod = this.dot(this.getRow(i), m.getCol(j));
@@ -59,5 +59,14 @@ class Matrix {
     return newMatrix;
   }
 
-  
+
+  // return a new matrix with the columns of this matrix as its rows, and the rows of this matrix as its columns
+  transpose() {
+    let newMatrix = new Matrix(this.cols, this.rows);
+    for (let i = 0; i < this.cols; i++) {
+      newMatrix.matrix[i] = this.getCol(i);
+    }
+    return newMatrix;
+  }
+
 }
