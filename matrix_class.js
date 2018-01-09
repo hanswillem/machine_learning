@@ -12,7 +12,7 @@ class Matrix {
     for (let i = 0; i < this.rows; i++) {
       let rw = [];
       for (let j = 0; j < this.cols; j++) {
-        rw.push(Math.floor(Math.random() * 10));
+        rw.push(Math.floor(Math.random() * 5));
       }
       this.matrix.push(rw);
     }
@@ -47,26 +47,53 @@ class Matrix {
 
   // multiply this matrix with matrix m and return the result in a new matrix
   product(m) {
-    let newMatrix = new Matrix(this.rows, m.cols);
+    let newMatrix = []
     for (let i = 0; i < this.rows; i++) {
       let newRow = [];
       for (let j = 0; j < m.cols; j++) {
         let dotprod = this.dot(this.getRow(i), m.getCol(j));
         newRow.push(dotprod);
       }
-      newMatrix.matrix[i] = newRow;
+      newMatrix.push(newRow);
     }
-    return newMatrix;
+    this.matrix = newMatrix;
   }
 
 
   // return a new matrix with the columns of this matrix as its rows, and the rows of this matrix as its columns
   transpose() {
-    let newMatrix = new Matrix(this.cols, this.rows);
+    let newMatrix = [];
     for (let i = 0; i < this.cols; i++) {
-      newMatrix.matrix[i] = this.getCol(i);
+      newMatrix.push(this.getCol(i));
     }
-    return newMatrix;
+    this.matrix = newMatrix;
+  }
+
+
+  // adds a number to all the elements of this matrix, or ads another matrix to this matrix
+  add(n) {
+    if (n instanceof Matrix) {
+      // ad another matrix to this matrix - only works if the two matrices have the same dimensions
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.matrix[i].length; j++) {
+          this.matrix[i][j] += n.matrix[i][j];
+        }
+      }
+    } else {
+      
+      // ad a number to every element of this matrix
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.matrix[i].length; j++) {
+          this.matrix[i][j] += n;
+        }
+      }
+    }
   }
 
 }
+
+
+m1 = new Matrix(3, 2);
+console.log(m1.matrix)
+m1.transpose();
+console.log(m1.matrix)
