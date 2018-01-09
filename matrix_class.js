@@ -45,7 +45,7 @@ class Matrix {
   }
 
 
-  // multiply this matrix with matrix m and return the result in a new matrix
+  // multiply this matrix with matrix m
   product(m) {
     let newMatrix = []
     for (let i = 0; i < this.rows; i++) {
@@ -60,7 +60,7 @@ class Matrix {
   }
 
 
-  // return a new matrix with the columns of this matrix as its rows, and the rows of this matrix as its columns
+  // turn the columns of this matrix into the rows and the rows into the columns
   transpose() {
     let newMatrix = [];
     for (let i = 0; i < this.cols; i++) {
