@@ -36,7 +36,7 @@ class Matrix {
 
 
   // return the dot product between two arrays
-  dot(a, b) {
+  dotArr(a, b) {
     let sum = 0;
     for (let i = 0; i < a.length; i++) {
       sum += a[i] * b[i];
@@ -45,18 +45,42 @@ class Matrix {
   }
 
 
-  // multiply this matrix with matrix m
-  product(m) {
+  // perform a dot product between this matrix and other matrix
+  // the columns of this matrix should equal the rows of the other matrix for the dot product to work
+  dot(other) {
+    if (this.cols != other.rows) {
+      return false
+    }
     let newMatrix = []
     for (let i = 0; i < this.rows; i++) {
       let newRow = [];
-      for (let j = 0; j < m.cols; j++) {
-        let dotprod = this.dot(this.getRow(i), m.getCol(j));
+      for (let j = 0; j < other.cols; j++) {
+        let dotprod = this.dotArr(this.getRow(i), other.getCol(j));
         newRow.push(dotprod);
       }
       newMatrix.push(newRow);
     }
     this.matrix = newMatrix;
+  }
+
+
+  // multiply by a scalar or by another matrix
+  // if other is a matrix multiply each element of this matrix with the corresponding element of other matrix
+  // if other is not a matrix multiply each element with other
+  mult(other) {
+    if (other instanceof Matrix) {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          this.matrix[i][j] *= other.matrix[i][j];
+        }
+      }  
+    } else {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          this.matrix[i][j] *= other;
+        }
+      }
+    }
   }
 
 
@@ -71,17 +95,15 @@ class Matrix {
 
 
   // adds a number to all the elements of this matrix, or ads another matrix to this matrix
+  // adding another matrix to this matrix only works if the two matrices have the same dimensions
   add(n) {
     if (n instanceof Matrix) {
-      // ad another matrix to this matrix - only works if the two matrices have the same dimensions
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.matrix[i].length; j++) {
           this.matrix[i][j] += n.matrix[i][j];
         }
       }
     } else {
-      
-      // ad a number to every element of this matrix
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.matrix[i].length; j++) {
           this.matrix[i][j] += n;
@@ -89,5 +111,5 @@ class Matrix {
       }
     }
   }
-
+  
 }
