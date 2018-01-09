@@ -70,14 +70,3 @@ class Matrix {
   }
 
 }
-
-
-m1 = new Matrix(3, 2);
-m2 = new Matrix(2, 3);
-m3 = m1.product(m2);
-m4 = m3.transpose();
-
-console.log(m1.matrix);
-console.log(m2.matrix);
-console.log(m3.matrix);
-console.log(m4.matrix);
