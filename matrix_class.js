@@ -91,9 +91,3 @@ class Matrix {
   }
 
 }
-
-
-m1 = new Matrix(3, 2);
-console.log(m1.matrix)
-m1.transpose();
-console.log(m1.matrix)
