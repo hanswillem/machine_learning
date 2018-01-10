@@ -113,6 +113,25 @@ class Matrix {
   }
 
 
+  // subtracts a number from all the elements of this matrix, or subtracts another matrix from this matrix
+  // subtracting another matrix from this matrix only works if the two matrices have the same dimensions
+  sub(n) {
+    if (n instanceof Matrix) {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.matrix[i].length; j++) {
+          this.matrix[i][j] -= n.matrix[i][j];
+        }
+      }
+    } else {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.matrix[i].length; j++) {
+          this.matrix[i][j] -= n;
+        }
+      }
+    }
+  }
+
+
   // returns a flattend array of this.matrix
   flat() {
     let flatMatrix = [];
