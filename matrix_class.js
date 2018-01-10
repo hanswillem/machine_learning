@@ -111,5 +111,17 @@ class Matrix {
       }
     }
   }
+
+
+  // returns a flattend array of this.matrix
+  flat() {
+    let flatMatrix = [];
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        flatMatrix.push(this.matrix[i][j]);
+      }
+    }
+    return flatMatrix;
+  }
   
 }
