@@ -1,3 +1,3 @@
-# Python AI
+# Machine Learning
 
-A collection of python files and jupyter notebooks exploring artificial intelligence.
+A collection of python and js files exploring artificial intelligence.
