@@ -99,13 +99,13 @@ class Matrix {
   add(n) {
     if (n instanceof Matrix) {
       for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.matrix[i].length; j++) {
+        for (let j = 0; j < this.cols; j++) {
           this.matrix[i][j] += n.matrix[i][j];
         }
       }
     } else {
       for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.matrix[i].length; j++) {
+        for (let j = 0; j < this.cols; j++) {
           this.matrix[i][j] += n;
         }
       }
@@ -118,13 +118,13 @@ class Matrix {
   sub(n) {
     if (n instanceof Matrix) {
       for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.matrix[i].length; j++) {
+        for (let j = 0; j < this.cols; j++) {
           this.matrix[i][j] -= n.matrix[i][j];
         }
       }
     } else {
       for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.matrix[i].length; j++) {
+        for (let j = 0; j < this.cols; j++) {
           this.matrix[i][j] -= n;
         }
       }
