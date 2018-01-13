@@ -85,7 +85,7 @@ class Matrix {
 
 
     // turn the columns of this matrix into the rows and the rows into the columns
-    static transpose(other) {
+    transpose(other) {
         let newdata = [];
         for (let i = 0; i < other.cols; i++) {
             newdata.push(other.getCol(i));
