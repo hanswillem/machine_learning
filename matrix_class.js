@@ -35,50 +35,11 @@ class Matrix {
     }
 
 
-    // return the dot product between two arrays
-    dotArr(a, b) {
-        let sum = 0;
-        for (let i = 0; i < a.length; i++) {
-            sum += a[i] * b[i];
-        }
-        return sum;
-    }
-
-
-    // perform a dot product between this matrix and another matrix
-    // the columns of this matrix should equal the rows of the other matrix for the dot product to work
-    dot(other) {
-        if (this.cols != other.rows) {
-            return false
-        }
-        let newdata = []
+    // multiply by a scalar
+    mult(n) {
         for (let i = 0; i < this.rows; i++) {
-            let newRow = [];
-            for (let j = 0; j < other.cols; j++) {
-                let dotprod = this.dotArr(this.getRow(i), other.getCol(j));
-                newRow.push(dotprod);
-            }
-            newdata.push(newRow);
-        }
-        this.data = newdata;
-    }
-
-
-    // multiply by a scalar or by another matrix
-    // if other is a matrix multiply each element of this matrix with the corresponding element of other matrix
-    // if other is not a matrix multiply each element with other
-    mult(other) {
-        if (other instanceof data) {
-            for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.cols; j++) {
-                    this.data[i][j] *= other.data[i][j];
-                }
-            }
-        } else {
-            for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.cols; j++) {
-                    this.data[i][j] *= other;
-                }
+            for (let j = 0; j < this.cols; j++) {
+                this.data[i][j] *= n;
             }
         }
     }
@@ -147,6 +108,37 @@ class Matrix {
     // prints this.data to the console
     print() {
         console.log(this.data);
+    }
+
+
+    // ---------------------------- static methods ----------------------------
+
+
+    // returns the dot product between two arrays
+    static dotArr(a, b) {
+        let sum = 0;
+        for (let i = 0; i < a.length; i++) {
+            sum += a[i] * b[i];
+        }
+        return sum;
+    }
+
+
+    // performs a dot product between matrix A and matrix B
+    // the columns of A should be equal to the rows of B for the dot product to work
+    static dot(ma, mb) {
+        let newMatrix = new Matrix(ma.rows, mb.cols);
+        let newdata = []
+        for (let i = 0; i < ma.rows; i++) {
+            let newRow = [];
+            for (let j = 0; j < mb.cols; j++) {
+                let dotprod = Matrix.dotArr(ma.getRow(i), mb.getCol(j));
+                newRow.push(dotprod);
+            }
+            newdata.push(newRow);
+        }
+        newMatrix.data = newdata;
+        return newMatrix;
     }
 
 }
