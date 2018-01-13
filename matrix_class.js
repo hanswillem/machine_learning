@@ -7,14 +7,24 @@ class Matrix {
     }
 
 
-    // initialize this data by setting all values to a random number
+    // initialize this data by setting all values to 0
     init() {
         for (let i = 0; i < this.rows; i++) {
             let rw = [];
             for (let j = 0; j < this.cols; j++) {
-                rw.push(Math.floor(Math.random() * 5));
+                rw.push(0);
             }
             this.data.push(rw);
+        }
+    }
+
+
+    // fill this matrix with random numbers
+    randomize() {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                this.data[i][j] = Math.floor(Math.random() * 5)
+            }
         }
     }
 
