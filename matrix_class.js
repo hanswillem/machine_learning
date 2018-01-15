@@ -23,7 +23,7 @@ class Matrix {
     randomize() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                this.data[i][j] = Math.floor(Math.random() * 5)
+                this.data[i][j] = Math.random();
             }
         }
     }
@@ -104,14 +104,14 @@ class Matrix {
 
 
     // returns a flattend array of this matrix
-    flat() {
-        let flatdata = [];
+    toArray() {
+        let arr = [];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                flatdata.push(this.data[i][j]);
+                arr.push(this.data[i][j]);
             }
         }
-        return flatdata;
+        return arr;
     }
 
 
@@ -149,6 +149,18 @@ class Matrix {
         }
         newMatrix.data = newdata;
         return newMatrix;
+    }
+
+
+    // takes in an array and returns a new matrix with one column
+    static fromArray(a) {
+      let newMatrix = new Matrix(a.length, 1);
+      let newData = [];
+      for (let i of a) {
+        newData.push([i]);
+      }
+      newMatrix.data = newData;
+      return newMatrix;
     }
 
 }
