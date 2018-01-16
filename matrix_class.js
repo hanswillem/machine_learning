@@ -191,7 +191,7 @@ class NN {
     this.outputs = outputs;
   }
 
-  // m_x = matrix 
+
   query(arr_inputs) {
     let m_x = Matrix.fromArray(arr_inputs);
     let m_wi = new Matrix(this.hidden, this.inputs);
@@ -205,6 +205,7 @@ class NN {
   }
 
 }
+
 
 let n = new NN(3, 2, 2);
 n.query([15, 1, .003]);
