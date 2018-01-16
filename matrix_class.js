@@ -204,8 +204,6 @@ class NN {
     m_w_dot_h.print();
   }
 
-
-  
 }
 
 let n = new NN(3, 2, 2);
