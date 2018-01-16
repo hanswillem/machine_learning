@@ -152,6 +152,19 @@ class Matrix {
     }
 
 
+    // returns a new matrix with the sigmoid function applied to all elements of m
+    static sigmoid(m) {
+      let newMatrix = new Matrix(m.rows, m.cols);
+      for (let i = 0; i < m.rows; i++) {
+        for (let j = 0; j < m.cols; j++) {
+          let x = m.data[i][j];
+          newMatrix.data[i][j] = 1 / ( 1 + Math.exp(-x) );
+        }
+      }
+      return newMatrix;
+    }
+
+
     // takes in an array and returns a new matrix with one column
     static fromArray(a) {
       let newMatrix = new Matrix(a.length, 1);
