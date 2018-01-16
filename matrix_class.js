@@ -183,7 +183,6 @@ class Matrix {
 // ---------------------------- Neural Network ----------------------------
 
 
-
 class NN {
   constructor(inputs, hidden, outputs) {
     this.inputs = inputs;
@@ -193,17 +192,22 @@ class NN {
 
 
   query(arr_inputs) {
+    // make inputs and weights from inputs to hidden matrices
     let m_x = Matrix.fromArray(arr_inputs);
     let m_wi = new Matrix(this.hidden, this.inputs);
     m_wi.randomize();
+    // dot product between weights and inputs
     let m_w_dot_x = Matrix.dot(m_wi, m_x);
+    // activation via sigmoid function
     let m_h = Matrix.sigmoid(m_w_dot_x);
+    // make weights from hidden to output matrix
     let m_wh = new Matrix(this.outputs, this.hidden);
     m_wh.randomize();
+    // dot product between hidden and outputs
     let m_w_dot_h = Matrix.dot(m_wh, m_h);
     m_w_dot_h.print();
   }
-
+  
 }
 
 
