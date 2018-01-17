@@ -165,6 +165,18 @@ class Matrix {
     }
 
 
+    // map any function to all elements of matrix m and return the result in a new matrix
+    static applyFunc(m, fn) {
+        let newMatrix = new Matrix(m.rows, m.cols);
+        for (let i= 0; i < m.rows; i++) {
+            for (let j = 0; j < m.cols; j++) {
+                newMatrix.data[i][j] = fn(m.data[i][j]);
+            }
+        }
+        return newMatrix;
+    }
+
+
     // takes in an array and returns a new matrix with one column
     static fromArray(a) {
       let newMatrix = new Matrix(a.length, 1);
@@ -177,39 +189,3 @@ class Matrix {
     }
 
 }
-
-
-
-// ---------------------------- Neural Network ----------------------------
-
-
-class NN {
-  constructor(inputs, hidden, outputs) {
-    this.inputs = inputs;
-    this.hidden = hidden;
-    this.outputs = outputs;
-  }
-
-
-  query(arr_inputs) {
-    // make inputs and weights from inputs to hidden matrices
-    let m_x = Matrix.fromArray(arr_inputs);
-    let m_wi = new Matrix(this.hidden, this.inputs);
-    m_wi.randomize();
-    // dot product between weights and inputs
-    let m_w_dot_x = Matrix.dot(m_wi, m_x);
-    // activation via sigmoid function
-    let m_h = Matrix.sigmoid(m_w_dot_x);
-    // make weights from hidden to output matrix
-    let m_wh = new Matrix(this.outputs, this.hidden);
-    m_wh.randomize();
-    // dot product between hidden and outputs
-    let m_w_dot_h = Matrix.dot(m_wh, m_h);
-    m_w_dot_h.print();
-  }
-  
-}
-
-
-let n = new NN(3, 2, 2);
-n.query([15, 1, .003]);
