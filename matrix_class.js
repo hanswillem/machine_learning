@@ -62,13 +62,15 @@ class Matrix {
             newdata.push(this.getCol(i));
         }
         this.data = newdata;
+        // swap rows and cols vars
+        [this.rows, this.cols] = [this.cols, this.rows];
     }
 
 
     // adds a number to all the elements of this matrix, or ads another matrix to this data
     // adding another matrix to this matrix only works if the two matrices have the same dimensions
     add(n) {
-        if (n instanceof data) {
+        if (n instanceof Matrix) {
             for (let i = 0; i < this.rows; i++) {
                 for (let j = 0; j < this.data[i].length; j++) {
                     this.data[i][j] += n.data[i][j];
@@ -76,7 +78,7 @@ class Matrix {
             }
         } else {
             for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.data[i].length; j++) {
+                for (let j = 0; j < this.cols; j++) {
                     this.data[i][j] += n;
                 }
             }
@@ -87,7 +89,7 @@ class Matrix {
     // subtracts a number from all the elements of this matrix, or subtracts another matrix from this matrix
     // subtracting another matrix from this matrix only works if the two matrices have the same dimensions
     sub(n) {
-        if (n instanceof data) {
+        if (n instanceof Matrix) {
             for (let i = 0; i < this.rows; i++) {
                 for (let j = 0; j < this.data[i].length; j++) {
                     this.data[i][j] -= n.data[i][j];
@@ -95,7 +97,7 @@ class Matrix {
             }
         } else {
             for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.data[i].length; j++) {
+                for (let j = 0; j < this.cols; j++) {
                     this.data[i][j] -= n;
                 }
             }
