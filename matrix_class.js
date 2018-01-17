@@ -165,7 +165,7 @@ class Matrix {
     }
 
 
-    // map any function to all elements of matrix m and return the result in a new matrix
+    // map any function fn to all elements of matrix m and return the result in a new matrix
     static applyFunc(m, fn) {
         let newMatrix = new Matrix(m.rows, m.cols);
         for (let i= 0; i < m.rows; i++) {
