@@ -228,7 +228,7 @@ class NeuralNetwork {
         let hidden = Matrix.mult(this.weights_to_hidden, inputs);
         // add the bias
         hidden.add(this.bias_to_hidden);
-        // put result through activation function (sigmoid)
+        // pass result through activation function (sigmoid)
         hidden = Matrix.applyFunc(hidden, this.sigmoid);
 
 
@@ -238,7 +238,7 @@ class NeuralNetwork {
         let outputs = Matrix.mult(this.weights_to_outputs, hidden);
         // add the bias
         outputs.add(this.bias_to_outputs)
-        // and put result through activation function (sigmoid)
+        // pass result through activation function (sigmoid)
         outputs = Matrix.applyFunc(outputs, this.sigmoid);
         
         //return the outputs as an array
