@@ -127,7 +127,7 @@ class Matrix {
 
 
     // returns the dot product between two arrays
-    static dotArr(a, b) {
+    static dot(a, b) {
         let sum = 0;
         for (let i = 0; i < a.length; i++) {
             sum += a[i] * b[i];
@@ -144,7 +144,7 @@ class Matrix {
         for (let i = 0; i < ma.rows; i++) {
             let newRow = [];
             for (let j = 0; j < mb.cols; j++) {
-                let matrixprod = Matrix.dotArr(ma.getRow(i), mb.getCol(j));
+                let matrixprod = Matrix.dot(ma.getRow(i), mb.getCol(j));
                 newRow.push(matrixprod);
             }
             newdata.push(newRow);
@@ -154,20 +154,7 @@ class Matrix {
     }
 
 
-    // returns a new matrix with the sigmoid function applied to all elements of m
-    static sigmoid(m) {
-      let newMatrix = new Matrix(m.rows, m.cols);
-      for (let i = 0; i < m.rows; i++) {
-        for (let j = 0; j < m.cols; j++) {
-          let x = m.data[i][j];
-          newMatrix.data[i][j] = 1 / ( 1 + Math.exp(-x) );
-        }
-      }
-      return newMatrix;
-    }
-
-
-    // map any function fn to all elements of matrix m and return the result in a new matrix
+    // apply function fn to all elements of matrix m and return the result in a new matrix
     static applyFunc(m, fn) {
         let newMatrix = new Matrix(m.rows, m.cols);
         for (let i= 0; i < m.rows; i++) {
@@ -179,7 +166,7 @@ class Matrix {
     }
 
 
-    // takes in an array and returns a new matrix with one column
+    // takes in an array and returns it in the form of a new matrix with one column
     static fromArray(a) {
       let newMatrix = new Matrix(a.length, 1);
       let newData = [];
@@ -200,7 +187,6 @@ class Matrix {
 
 // still need to add biasses!!
 class NeuralNetwork {
-    
     constructor(i, h, o) {
     this.i = i;
     this.h = h;
@@ -238,3 +224,10 @@ class NeuralNetwork {
     }
       
 }
+
+
+// ---------------------------------------------------------------------------
+
+
+let nn = new NeuralNetwork(3, 2, 2);
+nn.query([0, 1, 1])
