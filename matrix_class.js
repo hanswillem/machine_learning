@@ -177,6 +177,13 @@ class Matrix {
       return newMatrix;
     }
 
+
+    // returns matrix m (which should have only one column) as an array
+    static toArray(m) {
+        return m.getCol(0);
+    }
+
+
 }
 
 
@@ -191,7 +198,7 @@ class NeuralNetwork {
     this.i = i;
     this.h = h;
     this.o = o;
-
+    
     // weight matrices
     this.weights_to_hidden = new Matrix(this.h, this.i);
     this.weights_to_outputs = new Matrix(this.o, this.h);
@@ -219,7 +226,10 @@ class NeuralNetwork {
         // and put result through activation function (sigmoid)
         let outputs = Matrix.mult(this.weights_to_outputs, hidden);
         outputs = Matrix.applyFunc(outputs, this.sigmoid);
-        outputs.print();
+
+        //return the outputs as an array
+        outputs = Matrix.toArray(outputs);
+        return outputs;
     }
       
 }
@@ -229,4 +239,6 @@ class NeuralNetwork {
 
 
 let nn = new NeuralNetwork(3, 2, 2);
-nn.query([0, 1, 1])
+let o = nn.query([0, 1, 1])
+
+console.log(o);
