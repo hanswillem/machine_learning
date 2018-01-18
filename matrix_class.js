@@ -197,7 +197,6 @@ class NeuralNetwork {
     this.weights_to_outputs = new Matrix(this.o, this.h);
     this.weights_to_hidden.randomize();
     this.weights_to_outputs.randomize();
-
     }
 
 
