@@ -199,11 +199,16 @@ class NeuralNetwork {
     this.h = h;
     this.o = o;
     
-    // weight matrices
+    // weights and bias matrices
     this.weights_to_hidden = new Matrix(this.h, this.i);
+    this.bias_to_hidden = new Matrix(this.h, 1);
     this.weights_to_outputs = new Matrix(this.o, this.h);
+    this.bias_to_outputs = new Matrix(this.o, 1);
+    // randomizing
     this.weights_to_hidden.randomize();
     this.weights_to_outputs.randomize();
+    this.bias_to_hidden.randomize();
+    this.bias_to_outputs.randomize();
     }
 
 
@@ -213,20 +218,29 @@ class NeuralNetwork {
     }
 
 
-    query(arr_inputs) {
+    feedForward(arr_inputs) {
+
+        // ----------- from inputs to hidden -----------
+        
         // input matrix
         let inputs = Matrix.fromArray(arr_inputs);
-
         // multiply inputs by weights
-        // and put result through activation function (sigmoid)
         let hidden = Matrix.mult(this.weights_to_hidden, inputs);
+        // add the bias
+        hidden.add(this.bias_to_hidden);
+        // put result through activation function (sigmoid)
         hidden = Matrix.applyFunc(hidden, this.sigmoid);
 
-        // multiply hidden by weights
-        // and put result through activation function (sigmoid)
-        let outputs = Matrix.mult(this.weights_to_outputs, hidden);
-        outputs = Matrix.applyFunc(outputs, this.sigmoid);
 
+        // ----------- from hidden to outputs -----------
+
+        // multiply hidden by weights
+        let outputs = Matrix.mult(this.weights_to_outputs, hidden);
+        // add the bias
+        outputs.add(this.bias_to_outputs)
+        // and put result through activation function (sigmoid)
+        outputs = Matrix.applyFunc(outputs, this.sigmoid);
+        
         //return the outputs as an array
         outputs = Matrix.toArray(outputs);
         return outputs;
@@ -238,7 +252,7 @@ class NeuralNetwork {
 // ---------------------------------------------------------------------------
 
 
-let nn = new NeuralNetwork(3, 2, 2);
-let o = nn.query([0, 1, 1])
+let nn = new NeuralNetwork(3, 1, 1);
+let o = nn.feedForward([0, 1, 1])
 
 console.log(o);
