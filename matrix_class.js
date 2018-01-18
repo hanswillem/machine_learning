@@ -19,11 +19,11 @@ class Matrix {
     }
 
 
-    // fill this matrix with random numbers
+    // fill this matrix with random numbers between -1 and 1
     randomize() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                this.data[i][j] = Math.random();
+                this.data[i][j] = Math.random() * 2 - 1;
             }
         }
     }
@@ -169,11 +169,9 @@ class Matrix {
     // takes in an array and returns it in the form of a new matrix with one column
     static fromArray(a) {
       let newMatrix = new Matrix(a.length, 1);
-      let newData = [];
-      for (let i of a) {
-        newData.push([i]);
+      for (let i = 0; i < a.length; i++) {
+        newMatrix.data[i][0] = a[i];
       }
-      newMatrix.data = newData;
       return newMatrix;
     }
 
@@ -182,7 +180,6 @@ class Matrix {
     static toArray(m) {
         return m.getCol(0);
     }
-
 
 }
 
@@ -201,8 +198,8 @@ class NeuralNetwork {
     
     // weights and bias matrices
     this.weights_to_hidden = new Matrix(this.h, this.i);
-    this.bias_to_hidden = new Matrix(this.h, 1);
     this.weights_to_outputs = new Matrix(this.o, this.h);
+    this.bias_to_hidden = new Matrix(this.h, 1);
     this.bias_to_outputs = new Matrix(this.o, 1);
     // randomizing
     this.weights_to_hidden.randomize();
@@ -214,7 +211,7 @@ class NeuralNetwork {
 
     // sigmoid function for activation
     sigmoid(x) {
-        return 1 / (1 + Math.exp(-x) );
+        return 1 / ( 1 + Math.exp(-x) );
     }
 
 
@@ -252,7 +249,7 @@ class NeuralNetwork {
 // ---------------------------------------------------------------------------
 
 
-let nn = new NeuralNetwork(3, 1, 1);
+let nn = new NeuralNetwork(3, 1, 2);
 let o = nn.feedForward([0, 1, 1])
 
 console.log(o);
