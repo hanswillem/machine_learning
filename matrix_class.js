@@ -136,16 +136,16 @@ class Matrix {
     }
 
 
-    // performs a dot product between matrix A and matrix B
+    // performs a matrix product between matrix A and matrix B
     // the columns of A should be equal to the rows of B for the dot product to work
-    static dot(ma, mb) {
+    static mult(ma, mb) {
         let newMatrix = new Matrix(ma.rows, mb.cols);
         let newdata = []
         for (let i = 0; i < ma.rows; i++) {
             let newRow = [];
             for (let j = 0; j < mb.cols; j++) {
-                let dotprod = Matrix.dotArr(ma.getRow(i), mb.getCol(j));
-                newRow.push(dotprod);
+                let matrixprod = Matrix.dotArr(ma.getRow(i), mb.getCol(j));
+                newRow.push(matrixprod);
             }
             newdata.push(newRow);
         }
@@ -197,29 +197,44 @@ class Matrix {
 // ---------------------------- Neural Network ----------------------------
 
 
-class NN {
-  constructor(inputs, hidden, outputs) {
-    this.inputs = inputs;
-    this.hidden = hidden;
-    this.outputs = outputs;
-  }
+
+// still need to add biasses!!
+class NeuralNetwork {
+    
+    constructor(i, h, o) {
+    this.i = i;
+    this.h = h;
+    this.o = o;
+
+    // weight matrices
+    this.weights_to_hidden = new Matrix(this.h, this.i);
+    this.weights_to_outputs = new Matrix(this.o, this.h);
+    this.weights_to_hidden.randomize();
+    this.weights_to_outputs.randomize();
+
+    }
 
 
-  query(arr_inputs) {
-    // make inputs and weights from inputs to hidden matrices
-    let m_x = Matrix.fromArray(arr_inputs);
-    let m_wi = new Matrix(this.hidden, this.inputs);
-    m_wi.randomize();
-    // dot product between weights and inputs
-    let m_w_dot_x = Matrix.dot(m_wi, m_x);
-    // activation via sigmoid function
-    let m_h = Matrix.sigmoid(m_w_dot_x);
-    // make weights from hidden to output matrix
-    let m_wh = new Matrix(this.outputs, this.hidden);
-    m_wh.randomize();
-    // dot product between hidden and outputs
-    let m_w_dot_h = Matrix.dot(m_wh, m_h);
-    m_w_dot_h.print();
-  }
-  
+    // sigmoid function for activation
+    sigmoid(x) {
+        return 1 / (1 + Math.exp(-x) );
+    }
+
+
+    query(arr_inputs) {
+        // input matrix
+        let inputs = Matrix.fromArray(arr_inputs);
+
+        // multiply inputs by weights
+        // and put result through activation function (sigmoid)
+        let hidden = Matrix.mult(this.weights_to_hidden, inputs);
+        hidden = Matrix.applyFunc(hidden, this.sigmoid);
+
+        // multiply hidden by weights
+        // and put result through activation function (sigmoid)
+        let outputs = Matrix.mult(this.weights_to_outputs, hidden);
+        outputs = Matrix.applyFunc(outputs, this.sigmoid);
+        outputs.print();
+    }
+      
 }
