@@ -189,7 +189,6 @@ class Matrix {
 
 
 
-// still need to add biasses!!
 class NeuralNetwork {
     constructor(i, h, o) {
     this.i = i;
