@@ -29,6 +29,16 @@ class Matrix {
     }
 
 
+    // fill this matrix with random ints below 5 to do easy math tests
+    addtestvals() {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                this.data[i][j] = Math.round(Math.random() * 4);
+            }
+        }
+    }
+
+
     // return row n of this matrix
     getRow(n) {
         return this.data[n];
@@ -55,24 +65,12 @@ class Matrix {
     }
 
 
-    // turn the columns of this matrix into the rows and the rows into the columns
-    transpose() {
-        let newdata = [];
-        for (let i = 0; i < this.cols; i++) {
-            newdata.push(this.getCol(i));
-        }
-        this.data = newdata;
-        // swap rows and cols vars
-        [this.rows, this.cols] = [this.cols, this.rows];
-    }
-
-
     // adds a number to all the elements of this matrix, or ads another matrix to this data
     // adding another matrix to this matrix only works if the two matrices have the same dimensions
     add(n) {
         if (n instanceof Matrix) {
             for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.data[i].length; j++) {
+                for (let j = 0; j < this.cols; j++) {
                     this.data[i][j] += n.data[i][j];
                 }
             }
@@ -91,7 +89,7 @@ class Matrix {
     sub(n) {
         if (n instanceof Matrix) {
             for (let i = 0; i < this.rows; i++) {
-                for (let j = 0; j < this.data[i].length; j++) {
+                for (let j = 0; j < this.cols; j++) {
                     this.data[i][j] -= n.data[i][j];
                 }
             }
@@ -124,6 +122,30 @@ class Matrix {
 
 
     // ---------------------------- static methods ----------------------------
+
+
+    // ads matrix a to matrix b and returns the result as a new matrix
+    static add(a, b) {
+        let newMatrix = new Matrix(a.rows, a.cols);
+        for (let i = 0; i < a.rows; i++) {
+            for (let j = 0; j < a.cols; j++) {
+                newMatrix.data[i][j] = a.data[i][j] + b.data[i][j];
+            }
+        }
+        return newMatrix;
+    }
+
+
+    // subtracts matrix a from matrix b and returns the result as a new matrix
+    static sub(a, b) {
+        let newMatrix = new Matrix(a.rows, a.cols);
+        for (let i = 0; i < a.rows; i++) {
+            for (let j = 0; j < a.cols; j++) {
+                newMatrix.data[i][j] = a.data[i][j] - b.data[i][j];
+            }
+        }
+        return newMatrix;
+    }
 
 
     // returns the dot product between two arrays
@@ -181,6 +203,18 @@ class Matrix {
         return m.getCol(0);
     }
 
+
+    // turn the columns of matrix m  into the rows and the rows into the columns
+    static transpose(m) {
+        let newMatrix = new Matrix(m.cols, m.rows)
+        let newdata = [];
+        for (let i = 0; i < m.cols; i++) {
+            newdata.push(m.getCol(i));
+        }
+        newMatrix.data = newdata;
+        return newMatrix;
+    }
+
 }
 
 
@@ -194,7 +228,7 @@ class NeuralNetwork {
     this.i = i;
     this.h = h;
     this.o = o;
-    
+
     // weights and bias matrices
     this.weights_to_hidden = new Matrix(this.h, this.i);
     this.weights_to_outputs = new Matrix(this.o, this.h);
@@ -214,12 +248,12 @@ class NeuralNetwork {
     }
 
 
-    feedForward(arr_inputs) {
+    feedForward(inputs_arr) {
 
         // ----------- from inputs to hidden -----------
-        
+
         // input matrix
-        let inputs = Matrix.fromArray(arr_inputs);
+        let inputs = Matrix.fromArray(inputs_arr);
         // multiply inputs by weights
         let hidden = Matrix.mult(this.weights_to_hidden, inputs);
         // add the bias
@@ -236,19 +270,35 @@ class NeuralNetwork {
         outputs.add(this.bias_to_outputs)
         // pass result through activation function (sigmoid)
         outputs = Matrix.applyFunc(outputs, this.sigmoid);
-        
         //return the outputs as an array
         outputs = Matrix.toArray(outputs);
         return outputs;
     }
-      
+
+
+    // train the network - backpropagation 
+    train(inputs_arr, targets_arr) {
+        let targets = Matrix.fromArray(targets_arr);
+
+        // feed forward the inputs
+        let outputs = this.feedForward(inputs_arr);
+        outputs = Matrix.fromArray(outputs);
+
+        // calculate the ouput errors -> errors = target - ouputs
+        let errors_outputs = Matrix.sub(targets, outputs);
+
+        // calculate the hidden errors
+        let weights_to_outputs_t = Matrix.transpose(this.weights_to_outputs);
+        let errors_hidden = Matrix.mult(weights_to_outputs_t, errors_outputs);
+      }
 }
 
 
 // ---------------------------------------------------------------------------
 
 
-let nn = new NeuralNetwork(3, 1, 2);
-let o = nn.feedForward([0, 1, 1])
+let nn = new NeuralNetwork(3, 2, 2);
+let inputs = [1, -5, 1];
+let targets = [0, 1];
 
-console.log(o);
+nn.train(inputs, targets);
