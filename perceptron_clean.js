@@ -7,14 +7,14 @@ class Perceptron {
     
     // init random weights
     for (let i = 0; i < this.numInputs; i++) {
-      this.weights.push(random(-1, 1));
+      this.weights.push(Math.random() * 2 - 1);
     }
   }
 
 
   feedForward(inputs) {
     // sum weighted inputs
-    sumWeightedInputs = 0;
+    let sumWeightedInputs = 0;
     for (let i = 0; i < this.numInputs; i++) {
       sumWeightedInputs += inputs[i] * this.weights[i];
     }
