@@ -276,20 +276,22 @@ class NeuralNetwork {
     }
 
 
-    // train the network - backpropagation 
+    // train the network - backpropagation
     train(inputs_arr, targets_arr) {
-        let targets = Matrix.fromArray(targets_arr);
-
         // feed forward the inputs
+        let targets = Matrix.fromArray(targets_arr);
         let outputs = this.feedForward(inputs_arr);
         outputs = Matrix.fromArray(outputs);
 
-        // calculate the ouput errors -> errors = target - ouputs
+        // calculate the errors
+        // output errors
         let errors_outputs = Matrix.sub(targets, outputs);
-
-        // calculate the hidden errors
+        // hidden errors
         let weights_to_outputs_t = Matrix.transpose(this.weights_to_outputs);
         let errors_hidden = Matrix.mult(weights_to_outputs_t, errors_outputs);
+
+        // something with the derivative
+
       }
 }
 
