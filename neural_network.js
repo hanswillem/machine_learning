@@ -115,6 +115,18 @@ class Matrix {
     }
 
 
+    // return a copy of this matrix
+    copy() {
+        let newMatrix = new Matrix(this.rows, this.cols) 
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                newMatrix.data[i][j] = this.data[i][j];
+            }
+        }
+        return newMatrix;
+    }
+
+
     // prints this.data to the console
     print() {
         console.log(this.data);
@@ -289,8 +301,8 @@ class NeuralNetwork {
         // hidden errors
         let weights_to_outputs_t = Matrix.transpose(this.weights_to_outputs);
         let errors_hidden = Matrix.mult(weights_to_outputs_t, errors_outputs);
-
-        // something with the derivative
+        errors_hidden.print();
+        // something with the derivative here
 
       }
 }
@@ -299,8 +311,10 @@ class NeuralNetwork {
 // ---------------------------------------------------------------------------
 
 
-let nn = new NeuralNetwork(3, 2, 2);
-let inputs = [1, -5, 1];
-let targets = [0, 1];
+let m1 = new Matrix(3, 2);
+m1.addtestvals();
 
-nn.train(inputs, targets);
+let m2 = m1.copy();
+
+m1.print();
+m2.print();
